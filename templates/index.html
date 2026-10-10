@@ -1,230 +1,246 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaagplan.nl - Slim Zaagadvies</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Zaagplan.nl — Slim zaagadvies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root { color-scheme: dark; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #e8edf8; background: #0f172a; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; padding: 48px 20px; background: radial-gradient(ellipse at 15% 0%, #4f46e525, transparent 55%), radial-gradient(ellipse at 95% 40%, #0891b218, transparent 50%), radial-gradient(circle at 50% 10%, #1e293b, #0f172a 80%); }
+    main { max-width: 960px; margin: auto; }
+    header { text-align: center; margin-bottom: 32px; }
+    .eyebrow, label > span { display: block; color: #a9b8d0; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow { color: #a5b4fc; margin-bottom: 12px; }
+    h1 { margin: 0; font-size: clamp(32px, 6vw, 46px); font-weight: 800; letter-spacing: -.045em; }
+    h2, h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: -.025em; }
+    p { color: #a9b8d0; font-size: 14px; line-height: 1.7; }
+    .card { padding: 28px; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; background: rgba(20,30,49,.78); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: 0 18px 55px #02061730; }
+    .project-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; }
+    label { display: block; min-width: 0; }
+    label > span { margin-bottom: 8px; }
+    input, select { width: 100%; min-width: 0; min-height: 46px; padding: 12px; color: #f1f5f9; background: #0b1223b3; border: 1px solid #ffffff12; border-radius: 10px; font: inherit; font-size: 13px; transition: border-color .18s, box-shadow .18s, background .18s; }
+    select { text-overflow: ellipsis; }
+    option { background: #111c30; }
+    input::placeholder { color: #8292ac; opacity: 1; }
+    input:hover, select:hover { border-color: #637397; background: #101b30; }
+    input:focus, select:focus { outline: none; border-color: #818cf8; box-shadow: 0 0 0 3px #6366f126; }
+    button, .shop-link { cursor: pointer; border: 1px solid transparent; border-radius: 10px; padding: 12px 16px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .015em; transition: background .18s, border-color .18s, box-shadow .18s; }
+    button:focus-visible, a:focus-visible { outline: 2px solid #a5b4fc; outline-offset: 4px; }
+    button:disabled { opacity: .6; cursor: wait; }
+    .panels-section { margin: 28px 0 24px; padding-top: 24px; border-top: 1px solid #ffffff0d; }
+    .hint { margin: 0 0 20px; font-size: 12px; }
+    #panel-list { display: grid; gap: 16px; }
+    .panel-row { display: grid; grid-template-columns: 2fr 1fr 1fr .8fr; gap: 12px; }
+    .row-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .secondary { color: #c7d2fe; background: #6366f112; border-color: #818cf826; }
+    .secondary:hover { background: #6366f126; border-color: #818cf866; }
+    .quiet { color: #a9b8d0; background: transparent; }
+    .quiet:hover { color: #f1f5f9; background: #ffffff08; }
+    .primary, .download { width: 100%; min-height: 48px; color: white; background: linear-gradient(110deg, #6366f1, #4f46e5); box-shadow: 0 4px 18px #4f46e526; }
+    .primary:hover { background: linear-gradient(110deg, #818cf8, #6366f1); box-shadow: 0 6px 24px #4f46e540; }
+    .download { background: #047857; box-shadow: none; }
+    .download:hover { background: #059669; }
+    #results { margin-top: 24px; display: grid; gap: 24px; }
+    [hidden] { display: none !important; }
+    .stats, .shop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .stat { padding: 22px; text-align: center; }
+    .stat strong { display: block; margin-bottom: 8px; font-size: 32px; letter-spacing: -.04em; color: #a5b4fc; }
+    .stat:nth-child(2) strong { color: #6ee7b7; }
+    .stat:nth-child(3) strong { color: #fcd34d; }
+    .stat span { color: #a9b8d0; font-size: 12px; }
+    #sheets-container { display: grid; gap: 24px; }
+    h4 { font-size: 13px; font-weight: 500; color: #cbd5e1; }
+    canvas { display: block; width: 100%; height: auto; background: #080f20; border: 1px solid #ffffff14; border-radius: 8px; }
+    .shop-item { display: flex; flex-direction: column; gap: 8px; padding: 16px; background: #0b122380; border: 1px solid #ffffff0d; border-radius: 12px; font-size: 13px; }
+    .shop-item small { color: #a9b8d0; }
+    .shop-link { display: block; margin-top: auto; text-align: center; text-decoration: none; color: #c7d2fe; background: #6366f118; }
+    .shop-link:hover { background: #6366f130; }
+    #error { color: #fecaca; margin-bottom: 0; }
+    @media (max-width: 640px) {
+        body { padding: 28px 14px; }
+        .card { padding: 20px; border-radius: 16px; }
+        .project-grid, .shop-grid { grid-template-columns: 1fr; }
+        .panel-row { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-bottom: 16px; border-bottom: 1px solid #ffffff0d; }
+        .panel-row label:first-child { grid-column: 1 / -1; }
+        .stats { gap: 8px; }
+        .stat { padding: 16px 8px; }
+        .stat strong { font-size: 26px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen p-4 md:p-8">
-    <div class="max-w-4xl mx-auto space-y-6">
-        
-        <!-- Header -->
-        <header class="text-center space-y-2">
-            <h1 class="text-4xl font-extrabold text-indigo-400">🪚 Zaagplan.nl</h1>
-            <p class="text-slate-400">Bereken materiaalnood, bekijk de visuele indeling en genereer je zaaglijst-PDF.</p>
-        </header>
-
-        <!-- Input Formulier -->
-        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium mb-1 text-slate-300">Projectnaam:</label>
-                    <input type="text" id="project_naam" value="Mijn Maatwerkkast" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white focus:border-indigo-500 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-1 text-slate-300">Selecteer Materiaal:</label>
-                    <select id="material" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white focus:border-indigo-500 focus:outline-none">
-                        <option>MDF 18mm (2440x1220mm)</option>
-                        <option>Multiplex Berken 18mm (2440x1220mm)</option>
-                        <option>Spaanplaat Wit 18mm (2440x1220mm)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Panelenlijst -->
-            <div>
-                <h2 class="text-lg font-bold mb-3 text-indigo-300">Panelen Invoeren (mm)</h2>
-                <div id="panel-list" class="space-y-3">
-                    <div class="flex flex-wrap md:flex-nowrap gap-2">
-                        <input type="text" placeholder="Naam" class="p-name bg-slate-900 border border-slate-700 p-2 rounded flex-1" value="Zijwand">
-                        <input type="number" placeholder="Lengte" class="p-h bg-slate-900 border border-slate-700 p-2 rounded w-28" value="1800">
-                        <input type="number" placeholder="Breedte" class="p-w bg-slate-900 border border-slate-700 p-2 rounded w-28" value="400">
-                        <input type="number" placeholder="Aantal" class="p-q bg-slate-900 border border-slate-700 p-2 rounded w-20" value="2">
-                    </div>
-                    <div class="flex flex-wrap md:flex-nowrap gap-2">
-                        <input type="text" placeholder="Naam" class="p-name bg-slate-900 border border-slate-700 p-2 rounded flex-1" value="Legplank">
-                        <input type="number" placeholder="Lengte" class="p-h bg-slate-900 border border-slate-700 p-2 rounded w-28" value="600">
-                        <input type="number" placeholder="Breedte" class="p-w bg-slate-900 border border-slate-700 p-2 rounded w-28" value="400">
-                        <input type="number" placeholder="Aantal" class="p-q bg-slate-900 border border-slate-700 p-2 rounded w-20" value="4">
-                    </div>
-                </div>
-                <button onclick="addPanel()" class="mt-3 text-sm text-indigo-400 font-semibold hover:text-indigo-300">+ Extra paneel toevoegen</button>
-            </div>
-
-            <button onclick="calculate()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-lg transition-colors">⚡ Bereken Zaagplan & Nesting</button>
+<body>
+<main>
+    <header>
+        <span class="eyebrow">Van idee naar zaagplan</span>
+        <h1>Zaagplan.nl</h1>
+        <p>Bereken je materiaalbehoefte, bekijk de plaatindeling en download je zaaglijst.</p>
+    </header>
+    <form id="project-form" class="card">
+        <div class="project-grid">
+            <label><span>Projectnaam</span><input type="text" id="project_naam" placeholder="bijv. Kledingkast"></label>
+            <label><span>Selecteer materiaal</span>
+                <select id="material">
+                    <option data-width="2440" data-height="1220">MDF 18mm (2440 x 1220 mm)</option>
+                    <option data-width="3050" data-height="1220">MDF 18mm (3050 x 1220 mm)</option>
+                    <option data-width="2800" data-height="2070">MDF Lakdraag 18mm (2800 x 2070 mm)</option>
+                    <option data-width="2500" data-height="1250">Multiplex Berken 18mm (2500 x 1250 mm)</option>
+                    <option data-width="1530" data-height="1530">Multiplex Berken 15mm (1530 x 1530 mm)</option>
+                    <option data-width="2800" data-height="2070">Spaanplaat Gemelamineerd Wit 18mm (2800 x 2070 mm)</option>
+                    <option data-width="2440" data-height="590">OSB/3 Tand &amp; Groef 18mm (2440 x 590 mm)</option>
+                    <option data-width="2750" data-height="2050">Meubelpaneel Eik fineer 19mm (2750 x 2050 mm)</option>
+                    <option data-width="3050" data-height="1300">Compact HPL 12mm (3050 x 1300 mm)</option>
+                </select>
+            </label>
         </div>
-
-        <!-- Resultaten & Visuele Nesting -->
-        <div id="results" class="hidden space-y-6">
-            
-            <!-- Statistieken Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl">
-                    <span class="block text-3xl font-extrabold text-indigo-400" id="res-sheets">0</span>
-                    <span class="text-sm text-slate-400">Platen Nodig</span>
-                </div>
-                <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl">
-                    <span class="block text-3xl font-extrabold text-emerald-400" id="res-m2">0</span>
-                    <span class="text-sm text-slate-400">m² Hout Gebruikt</span>
-                </div>
-                <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl">
-                    <span class="block text-3xl font-extrabold text-amber-400" id="res-waste">0%</span>
-                    <span class="text-sm text-slate-400">Zaagafval</span>
-                </div>
+        <section class="panels-section" aria-labelledby="panels-title">
+            <h2 id="panels-title">Panelen invoeren</h2>
+            <p class="hint">Alle maten in millimeters. Laat het aantal leeg voor één exemplaar.</p>
+            <div id="panel-list"></div>
+            <div class="row-actions">
+                <button type="button" class="secondary" onclick="addPanel()">+ Extra paneel toevoegen</button>
+                <button type="button" class="quiet" onclick="removeEmptyPanels()">Lege regels verwijderen</button>
             </div>
-
-            <!-- Visueel Zaagschema (Canvas Container) -->
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-xl space-y-4">
-                <h3 class="font-bold text-lg text-indigo-300">📐 Visuele Plaat-Indeling</h3>
-                <div id="sheets-container" class="space-y-6"></div>
-            </div>
-
-            <!-- Download Button -->
-            <button onclick="downloadPDF()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-lg transition-colors flex justify-center items-center gap-2">
-                📄 Download Officieel Zaagformulier (PDF)
-            </button>
-
-            <!-- Affiliate Shopping Links -->
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-xl space-y-4">
-                <h3 class="font-bold text-lg text-indigo-300">🛒 Direct meebestellen voor dit project</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div class="bg-slate-900 border border-slate-700 p-3 rounded-lg flex flex-col justify-between">
-                        <div>
-                            <span class="font-semibold text-sm block">Pattex Houtlijm D3</span>
-                            <span class="text-xs text-slate-400">Watervast 250g</span>
-                        </div>
-                        <a href="https://www.gamma.be" target="_blank" class="mt-3 block text-center bg-orange-500 hover:bg-orange-400 text-white font-bold py-1.5 rounded text-xs">Bestel op Gamma →</a>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-700 p-3 rounded-lg flex flex-col justify-between">
-                        <div>
-                            <span class="font-semibold text-sm block">Schroeven 4x40mm</span>
-                            <span class="text-xs text-slate-400">Doos 200 stuks</span>
-                        </div>
-                        <a href="https://www.brico.be" target="_blank" class="mt-3 block text-center bg-red-600 hover:bg-red-500 text-white font-bold py-1.5 rounded text-xs">Bestel op Brico →</a>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-700 p-3 rounded-lg flex flex-col justify-between">
-                        <div>
-                            <span class="font-semibold text-sm block">Schuurpapier K120</span>
-                            <span class="text-xs text-slate-400">Set van 5 vellen</span>
-                        </div>
-                        <a href="https://www.bol.com" target="_blank" class="mt-3 block text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-1.5 rounded text-xs">Bestel op Bol.com →</a>
-                    </div>
-                </div>
-            </div>
-
+        </section>
+        <button id="calculate-button" type="submit" class="primary">Bereken zaagplan &amp; nesting</button>
+        <p id="error" role="alert" hidden></p>
+    </form>
+    <section id="results" aria-label="Zaagplan resultaten" aria-live="polite" hidden>
+        <div class="stats">
+            <div class="card stat"><strong id="res-sheets">0</strong><span>Platen nodig</span></div>
+            <div class="card stat"><strong id="res-m2">0</strong><span>m² hout gebruikt</span></div>
+            <div class="card stat"><strong id="res-waste">0%</strong><span>Zaagafval</span></div>
         </div>
+        <div class="card"><h3>Visuele plaatindeling</h3><div id="sheets-container"></div></div>
+        <button type="button" class="download" onclick="downloadPDF()">Download zaagformulier (PDF)</button>
+        <div class="card">
+            <h3>Direct meebestellen voor dit project</h3>
+            <div class="shop-grid">
+                <div class="shop-item"><strong>Pattex Houtlijm D3</strong><small>Watervast 250g</small><a class="shop-link" href="https://www.gamma.be" target="_blank" rel="noopener noreferrer">Bestel op Gamma →</a></div>
+                <div class="shop-item"><strong>Schroeven 4x40mm</strong><small>Doos 200 stuks</small><a class="shop-link" href="https://www.brico.be" target="_blank" rel="noopener noreferrer">Bestel op Brico →</a></div>
+                <div class="shop-item"><strong>Schuurpapier K120</strong><small>Set van 5 vellen</small><a class="shop-link" href="https://www.bol.com" target="_blank" rel="noopener noreferrer">Bestel op Bol.com →</a></div>
+            </div>
+        </div>
+    </section>
+</main>
+<template id="panel-template">
+    <div class="panel-row">
+        <label><span>Onderdeel</span><input type="text" class="p-name" placeholder="Onderdeel"></label>
+        <label><span>Lengte (mm)</span><input type="number" class="p-h" placeholder="Lengte" min="1" step="1"></label>
+        <label><span>Breedte (mm)</span><input type="number" class="p-w" placeholder="Breedte" min="1" step="1"></label>
+        <label><span>Aantal</span><input type="number" class="p-q" placeholder="Aantal" min="1" step="1"></label>
     </div>
-
-    <script>
-        function addPanel() {
-            const div = document.createElement('div');
-            div.className = 'flex flex-wrap md:flex-nowrap gap-2';
-            div.innerHTML = `
-                <input type="text" placeholder="Naam" class="p-name bg-slate-900 border border-slate-700 p-2 rounded flex-1">
-                <input type="number" placeholder="Lengte" class="p-h bg-slate-900 border border-slate-700 p-2 rounded w-28">
-                <input type="number" placeholder="Breedte" class="p-w bg-slate-900 border border-slate-700 p-2 rounded w-28">
-                <input type="number" placeholder="Aantal" class="p-q bg-slate-900 border border-slate-700 p-2 rounded w-20" value="1">
-            `;
-            document.getElementById('panel-list').appendChild(div);
-        }
-
-        function getPanels() {
-            const names = document.querySelectorAll('.p-name');
-            const heights = document.querySelectorAll('.p-h');
-            const widths = document.querySelectorAll('.p-w');
-            const qtys = document.querySelectorAll('.p-q');
-            let panels = [];
-            for(let i=0; i<names.length; i++) {
-                if(heights[i].value && widths[i].value) {
-                    panels.push({
-                        name: names[i].value || 'Paneel',
-                        height: heights[i].value,
-                        width: widths[i].value,
-                        qty: qtys[i].value || 1
-                    });
-                }
+</template>
+<script>
+    const byId = id => document.getElementById(id);
+    const rows = () => Array.from(document.querySelectorAll('#panel-list > .panel-row'));
+    let lastRequest = null;
+    function isEmptyPanel(row) { return Array.from(row.querySelectorAll('input')).every(input => !input.value.trim()); }
+    function appendPanel() { byId('panel-list').appendChild(byId('panel-template').content.cloneNode(true)); }
+    function addPanel() {
+        const empty = rows().find(isEmptyPanel);
+        if (empty) { empty.querySelector('input').focus(); return; }
+        appendPanel();
+        rows().at(-1).querySelector('input').focus();
+    }
+    function removeEmptyPanels() {
+        rows().filter(isEmptyPanel).forEach(row => row.remove());
+        if (!rows().length) appendPanel();
+    }
+    function getRequest() {
+        const panels = rows().filter(row => !isEmptyPanel(row)).map(row => {
+            const height = Number(row.querySelector('.p-h').value);
+            const width = Number(row.querySelector('.p-w').value);
+            const qty = Number(row.querySelector('.p-q').value || 1);
+            if (![height, width, qty].every(value => Number.isInteger(value) && value > 0)) {
+                throw new Error('Vul voor ieder paneel een geldige lengte, breedte en een positief geheel aantal in.');
             }
-            return panels;
+            return { name: row.querySelector('.p-name').value.trim() || 'Paneel', height, width, qty };
+        });
+        if (!panels.length) throw new Error('Voeg minstens één paneel met lengte en breedte toe.');
+        const option = byId('material').selectedOptions[0];
+        return { panels, material: option.value, sheet_w: Number(option.dataset.width), sheet_h: Number(option.dataset.height), project_naam: byId('project_naam').value.trim() || 'Mijn bouwproject' };
+    }
+    function showError(error) { byId('error').textContent = error.message; byId('error').hidden = false; }
+    async function post(url, payload) {
+        const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        if (!response.ok) {
+            const data = await response.json().catch(() => ({}));
+            throw new Error(data.error || 'Het verwerken is mislukt. Probeer het opnieuw.');
         }
-
-        async function calculate() {
-            const res = await fetch('/api/calculate', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ panels: getPanels() })
+        return response;
+    }
+    async function calculate(event) {
+        event.preventDefault();
+        byId('error').hidden = true;
+        byId('results').hidden = true;
+        const button = byId('calculate-button');
+        button.disabled = true;
+        button.textContent = 'Zaagplan berekenen…';
+        try {
+            const payload = getRequest();
+            const data = await (await post('/api/calculate', payload)).json();
+            if (JSON.stringify(payload) !== JSON.stringify(getRequest())) return;
+            byId('res-sheets').textContent = data.sheets_needed;
+            byId('res-m2').textContent = data.total_area_m2;
+            byId('res-waste').textContent = data.waste_percentage + '%';
+            renderSheets(data.sheets, payload.sheet_w, payload.sheet_h);
+            lastRequest = payload;
+            byId('results').hidden = false;
+        } catch (error) { showError(error); }
+        finally { button.disabled = false; button.textContent = 'Bereken zaagplan & nesting'; }
+    }
+    function renderSheets(sheets, sheetWidth, sheetHeight) {
+        byId('sheets-container').replaceChildren();
+        sheets.forEach(sheet => {
+            const wrapper = document.createElement('div');
+            const title = document.createElement('h4');
+            title.textContent = `Plaat #${sheet.sheet_id} (${sheetWidth} x ${sheetHeight} mm)`;
+            const canvas = document.createElement('canvas');
+            canvas.width = 1000;
+            canvas.height = Math.round(1000 * sheetHeight / sheetWidth);
+            canvas.setAttribute('role', 'img');
+            canvas.setAttribute('aria-label', `${title.textContent}, ${sheet.items.length} panelen. Details in de zaaglijst-PDF.`);
+            const ctx = canvas.getContext('2d');
+            const scaleX = canvas.width / sheetWidth, scaleY = canvas.height / sheetHeight;
+            sheet.items.forEach((item, index) => {
+                const x = item.x * scaleX, y = item.y * scaleY, w = item.w * scaleX, h = item.h * scaleY;
+                ctx.fillStyle = `hsl(${(index * 65 + 235) % 360}, 55%, 46%)`;
+                ctx.fillRect(x, y, w, h);
+                ctx.strokeStyle = '#ffffffaa'; ctx.strokeRect(x, y, w, h);
+                if (w > 40 && h > 24) {
+                    ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+                    ctx.fillStyle = '#fff'; ctx.font = '12px Inter, sans-serif';
+                    ctx.fillText(`${item.name} (${item.h} x ${item.w})`, x + 5, y + 17);
+                    ctx.restore();
+                }
             });
-            const data = await res.json();
-            
-            document.getElementById('res-sheets').innerText = data.sheets_needed;
-            document.getElementById('res-m2').innerText = data.total_area_m2;
-            document.getElementById('res-waste').innerText = data.waste_percentage + '%';
-            
-            renderSheets(data.sheets);
-            document.getElementById('results').classList.remove('hidden');
-        }
-
-        function renderSheets(sheets) {
-            const container = document.getElementById('sheets-container');
-            container.innerHTML = '';
-
-            sheets.forEach(sheet => {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'space-y-2';
-                wrapper.innerHTML = `<h4 class="text-sm font-semibold text-slate-300">Plaat #${sheet.sheet_id} (2440 x 1220 mm)</h4>`;
-
-                const canvas = document.createElement('canvas');
-                canvas.width = 800;
-                canvas.height = 400;
-                canvas.className = 'w-full bg-slate-950 border border-slate-700 rounded-lg';
-                
-                const ctx = canvas.getContext('2d');
-                const scaleX = 800 / 2440;
-                const scaleY = 400 / 1220;
-
-                sheet.items.forEach((item, idx) => {
-                    const x = item.x * scaleX;
-                    const y = item.y * scaleY;
-                    const w = item.w * scaleX;
-                    const h = item.h * scaleY;
-
-                    // Teken rechthoek
-                    ctx.fillStyle = `hsl(${(idx * 65) % 360}, 65%, 45%)`;
-                    ctx.fillRect(x, y, w, h);
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.lineWidth = 1;
-                    ctx.strokeRect(x, y, w, h);
-
-                    // Teken tekst als vak groot genoeg is
-                    if(w > 30 && h > 20) {
-                        ctx.fillStyle = '#ffffff';
-                        ctx.font = '10px sans-serif';
-                        ctx.fillText(`${item.name} (${item.h}x${item.w})`, x + 4, y + 14);
-                    }
-                });
-
-                wrapper.appendChild(canvas);
-                container.appendChild(wrapper);
-            });
-        }
-
-        async function downloadPDF() {
-            const response = await fetch('/api/export-pdf', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ 
-                    project_naam: document.getElementById('project_naam').value,
-                    material: document.getElementById('material').value,
-                    panels: getPanels() 
-                })
-            });
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Zaagplan_${document.getElementById('project_naam').value}.pdf`;
-            a.click();
-        }
-    </script>
+            wrapper.append(title, canvas);
+            byId('sheets-container').appendChild(wrapper);
+        });
+    }
+    async function downloadPDF() {
+        if (!lastRequest) return;
+        const payload = lastRequest;
+        byId('error').hidden = true;
+        try {
+            const response = await post('/api/export-pdf', payload);
+            const url = URL.createObjectURL(await response.blob());
+            const link = document.createElement('a');
+            link.href = url; link.download = `Zaagplan_${payload.project_naam}.pdf`;
+            document.body.appendChild(link); link.click(); link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } catch (error) { showError(error); }
+    }
+    byId('project-form').addEventListener('submit', calculate);
+    byId('project-form').addEventListener('input', () => { byId('results').hidden = true; lastRequest = null; });
+    appendPanel();
+    appendPanel();
+</script>
 </body>
 </html>
